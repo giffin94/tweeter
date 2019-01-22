@@ -23,3 +23,47 @@ body {
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
+
+ * {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+main {
+  position: initial;
+  padding-top: 140px;
+  width: 450px;
+  height: 400px;
+  margin: auto;
+  background-color: white;
+}
+
+main .new-tweet {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 380px;
+  background-color: rgb(238, 232, 232);
+  margin-left: 2em;
+  margin-right: 2em;
+  border: 2px solid lightgrey;
+  border-radius: 8px;
+}
+
+main .new-tweet h2 {
+  padding-bottom: 1px;
+  border-bottom: 1px solid black;  
+}
+
+
+main .new-tweet textarea {
+  width: 100%;
+  padding-top: 8px;
+ }
+
+main .new-tweet span {
+  float: right;
+  padding-right: 5px;
+  line-height: 2;
+  font-style: italic;
+}

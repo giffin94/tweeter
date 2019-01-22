@@ -2,7 +2,7 @@
 
 // Basic express setup:
 
-const PORT          = 8080;
+const PORT          = 7777;
 const express       = require("express");
 const bodyParser    = require("body-parser");
 const app           = express();
@@ -30,5 +30,5 @@ const tweetsRoutes = require("./routes/tweets")(DataHelpers);
 app.use("/tweets", tweetsRoutes);
 
 app.listen(PORT, () => {
-  console.log("Example app listening on port " + PORT);
+  console.log("Tweeter listening on port " + PORT);
 });
