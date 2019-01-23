@@ -27,15 +27,17 @@ body {
  * {
   font-family: 'Roboto Condensed', sans-serif;
 }
-
+/* Main - General */
 main {
   position: initial;
   padding-top: 140px;
   width: 450px;
-  height: 400px;
   margin: auto;
   background-color: white;
+  min-height: 100vh;
 }
+
+/* Main - Tweet form */
 
 main .new-tweet {
   padding-top: 0.5em;
@@ -66,4 +68,121 @@ main .new-tweet span {
   padding-right: 5px;
   line-height: 2;
   font-style: italic;
+}
+
+/* Main - Posted tweets */
+
+.posttweet img {
+  height: 60px;
+  width: 60px;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+  border: 1px solid grey;
+  border-radius: 8px;
+  opacity: 0.6;
+}
+
+.posttweet {
+  width: 380px;
+  background-color: rgb(238, 232, 232);
+  margin-top: 8px;
+  margin-left: 2em;
+  margin-right: 2em;
+  border: 2px solid lightgrey;
+  border-radius: 8px;
+}
+.posttweet header {
+  height: 76px;
+}
+.posttweet footer {
+  height: 30px;
+  background-color: whitesmoke;
+  border-top: 0.5px solid lightgrey;
+  padding-left: 10px;
+  padding-top: 5px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  color: #7c99a0;
+}
+
+.posttweet p {
+  height: 100px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin: 0;
+  background-color: whitesmoke;
+  color: #7c99a0;
+}
+
+.posttweet .user {
+  position: relative;
+  bottom: 40px;
+  font-weight: 700;
+  font-size: large;
+  margin-bottom: 40px;
+  margin-left: 10px;
+  margin-top: 18px;
+  color: #7c99a0;
+}
+
+.posttweet .tag {
+  float: right;
+  margin-top: 1em;
+  margin-right: 1em;
+  font-size: small;
+  color: grey;
+}
+
+.posttweet i {
+  float: right;
+  margin-right: 6px;
+  margin-top: 2px;
+  color: #458f76;
+  opacity: 0;
+}
+
+/* Twitter article when hovered */
+
+
+.posttweet:hover {
+  background-color: rgb(189, 186, 186);
+  border: 2px solid grey;
+}
+
+.posttweet:hover i {
+  opacity: 1;
+}
+
+.posttweet:hover img {
+  opacity: 1;
+}
+
+.posttweet:hover header {
+  height: 76px;
+}
+.posttweet:hover footer {
+  background-color: white;
+  border-top: 0.5px solid grey;
+  color: #244751;
+}
+
+.posttweet:hover p {
+  background-color: whitesmoke;
+  color: #244751;
+}
+
+.posttweet:hover .user {
+  color: #244751;
+}
+
+.posttweet:hover .tag {
+  color: grey;
+}
+
+/* setting for invalid text */
+
+.invalid {
+  color: red;
 }

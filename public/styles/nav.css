@@ -1,5 +1,6 @@
 #nav-bar {
   position: fixed;
+  opacity: 1;
   top: 0;
   width: 100%;
   background-color: #00a087;
