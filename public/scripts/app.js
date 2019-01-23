@@ -6,7 +6,6 @@
  */
 
 $(function() {
-
   // renderTweets(tweetData);
   
   function renderTweets(tweetArray) {
@@ -31,7 +30,7 @@ $(function() {
         $('<p/>,', {'text': `${tweetObject["content"]["text"]}`})
       ).append(
         $('<footer>').append(
-          $('<span/>', {'text': `${tweetObject["created_at"]}`})
+          $('<span/>', { 'data-livestamp': `${tweetObject["created_at"] / 1000}`})
           ).append(
             $('<i>', {'class': "fa fa-flag"})
           ).append(
