@@ -48,16 +48,27 @@ $(function() {
     console.log('Submitted, performing ajax call...');
     const serialized = $(this).serialize();
     console.log(serialized);
-    $.ajax({
-      method: 'POST',
-      url: '/tweets',
-      data: serialized,
-    }).done(loadTweets());
+    if(serialized !== 'text=' && serialized.length <= 145) {
+      $.ajax({
+        method: 'POST',
+        url: '/tweets',
+        data: serialized,
+      }).done(function () {
+        $('#newTweet').val('');
+        $('.counter').text('140');
+        loadTweets() 
+      });
+    } else {
+      alert("Invalid tweet!");
+    }
   });
 
   function loadTweets() {
-    $.ajax('/tweets', { method: 'GET' })
-    .then(function (tweets) {
+    $.ajax({ 
+      method: 'GET',
+      url: '/tweets'
+    })
+    .done(function (tweets) {
       $('#tweets-container').replaceWith(renderTweets(tweets));
     })
   }
