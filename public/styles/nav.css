@@ -26,7 +26,8 @@
 }
 
 #nav-bar .compose {
-  float: right;
+  position: absolute;
+  right: 1em;
   margin-top: 10px;
   margin-bottom: 10px;
   height: 60px;
