@@ -46,7 +46,7 @@ $(function() {
 
 
   function loadTweets() {
-    $.ajax({ 
+    $.ajax({
       method: 'GET',
       url: '/tweets'
     })
@@ -68,6 +68,7 @@ $(function() {
   console.log('Submitted, performing ajax call...');
   const serialized = $(this).serialize();
   const thisElement = $(this);
+  errorTab.slideUp(100);
   if(serialized === 'text=') {
     errorTab.text("You can't post an empty tweet!");
     errorTab.slideDown(100);
@@ -77,7 +78,6 @@ $(function() {
     errorTab.slideDown(100);
     return;
   } else {
-    errorTab.slideUp(100);
     $.ajax({
       method: 'POST',
       url: '/tweets',
