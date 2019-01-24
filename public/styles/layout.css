@@ -15,8 +15,8 @@ html {
  */
 
 body {
-  margin: 0;
-  color: #244751;
+  margin:           0;
+  color:            #244751;
   background-color: #eee;
 }
 
@@ -29,44 +29,44 @@ body {
 }
 /* Main - General */
 main {
-  padding-top: 140px;
-  width: 450px;
-  margin: auto;
+  padding-top:        140px;
+  width:              450px;
+  margin:             auto;
   background-color: white;
-  min-height: 100vh;
+  min-height:         100vh;
 }
 
 /* Main - Tweet form */
 
 main .new-tweet {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  padding-left: 1em;
-  padding-right: 1em;
-  width: 380px;
+  padding-top:        0.5em;
+  padding-bottom:     0.5em;
+  padding-left:       1em;
+  padding-right:      1em;
+  width:              380px;
   background-color: rgb(238, 232, 232);
-  margin-left: 2em;
-  margin-right: 2em;
-  border: 2px solid lightgrey;
-  border-radius: 8px;
+  margin-left:        2em;
+  margin-right:       2em;
+  border:             2px solid lightgrey;
+  border-radius:      8px;
 }
 
 main .new-tweet h2 {
-  padding-bottom: 1px;
-  border-bottom: 1px solid black;  
+  padding-bottom:     1px;
+  border-bottom:      1px solid black;  
 }
 
 
 main .new-tweet textarea {
-  width: 100%;
-  padding-top: 8px;
+  width:              100%;
+  padding-top:        8px;
  }
 
 main .new-tweet span {
-  float: right;
-  padding-right: 5px;
-  line-height: 2;
-  font-style: italic;
+  float:              right;
+  padding-right:      5px;
+  line-height:        2;
+  font-style:         italic;
 }
 
 /* Main - Posted tweets */

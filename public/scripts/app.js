@@ -69,7 +69,7 @@ $(function() {
   const serialized = $(this).serialize();
   const thisElement = $(this);
   errorTab.slideUp(100);
-  if(serialized === 'text=') {
+  if(!(serialized.replace('text=', ''))) {
     errorTab.text("You can't post an empty tweet!");
     errorTab.slideDown(100);
     return;
