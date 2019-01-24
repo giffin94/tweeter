@@ -6,7 +6,6 @@
  */
 
 $(function() {
-  // renderTweets(tweetData);
   
   function renderTweets(tweetArray) {
     $('#tweets-container').empty();
@@ -47,14 +46,14 @@ $(function() {
     event.preventDefault();
     console.log('Submitted, performing ajax call...');
     const serialized = $(this).serialize();
-    console.log(serialized);
     if(serialized !== 'text=' && serialized.length <= 145) {
       $.ajax({
         method: 'POST',
         url: '/tweets',
         data: serialized,
       }).done(function () {
-        $('#newTweet').val('');
+        $('#newtweet').children('textarea').val('');
+        $('#newtweet').children('placeholder').val('What are you humming about?');
         $('.counter').text('140');
         loadTweets() 
       });
@@ -72,6 +71,13 @@ $(function() {
       $('#tweets-container').replaceWith(renderTweets(tweets));
     })
   }
+
+  $('.compose').click(function(){
+    $('.new-tweet').slideToggle(120, function() {
+      console.log(this);
+      $(this).children('form').children('textarea').focus();
+    });
+  })
 
   loadTweets();
 
