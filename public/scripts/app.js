@@ -8,6 +8,7 @@
 $(function() {
   const errorTab = $('.error');
   errorTab.slideUp(0);
+  $('.new-tweet').slideUp(0);
 
   function renderTweets(tweetArray) {
     $('#tweets-container').empty();
@@ -87,7 +88,7 @@ $(function() {
       thisElement.children('textarea').val('');
       thisElement.children('placeholder').val('What are you humming about?');
       $('.counter').text('140');
-      loadTweets()
+      loadTweets();
     });
   }
 });
