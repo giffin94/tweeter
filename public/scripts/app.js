@@ -70,19 +70,14 @@ $(function() {
   const thisElement = $(this);
   if(serialized === 'text=') {
     errorTab.text("You can't post an empty tweet!");
-    errorTab.slideToggle(100, function() {
-      setTimeout(function(){
-        errorTab.slideToggle("slow")
-      }, 3000);
-    });
+    errorTab.slideDown(100);
+    return;
   } else if(serialized.length > 145){
     errorTab.text("Oops, character limit exceeded!");
-    errorTab.slideToggle(100, function() {
-      setTimeout(function(){
-        errorTab.slideToggle("slow")
-      }, 3000);
-    });
+    errorTab.slideDown(100);
+    return;
   } else {
+    errorTab.slideUp(100);
     $.ajax({
       method: 'POST',
       url: '/tweets',
@@ -92,7 +87,7 @@ $(function() {
       thisElement.children('textarea').val('');
       thisElement.children('placeholder').val('What are you humming about?');
       $('.counter').text('140');
-      loadTweets() 
+      loadTweets()
     });
   }
 });
