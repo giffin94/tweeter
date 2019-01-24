@@ -185,3 +185,10 @@ main .new-tweet span {
 .invalid {
   color: red;
 }
+
+.error {
+  background-color: tomato;
+  position: absolute;
+  width: 344px;
+  height: 35px;
+}

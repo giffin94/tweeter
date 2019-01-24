@@ -6,7 +6,9 @@
  */
 
 $(function() {
-  
+  const errorTab = $('.error');
+  errorTab.slideUp(0);
+
   function renderTweets(tweetArray) {
     $('#tweets-container').empty();
     for(const tweet of tweetArray) {
@@ -41,26 +43,7 @@ $(function() {
     return newTweet;
   }
 
-  var $posts = $('#newtweet');
-  $posts.on('submit', function (event) {
-    event.preventDefault();
-    console.log('Submitted, performing ajax call...');
-    const serialized = $(this).serialize();
-    if(serialized !== 'text=' && serialized.length <= 145) {
-      $.ajax({
-        method: 'POST',
-        url: '/tweets',
-        data: serialized,
-      }).done(function () {
-        $('#newtweet').children('textarea').val('');
-        $('#newtweet').children('placeholder').val('What are you humming about?');
-        $('.counter').text('140');
-        loadTweets() 
-      });
-    } else {
-      alert("Invalid tweet!");
-    }
-  });
+
 
   function loadTweets() {
     $.ajax({ 
@@ -74,13 +57,45 @@ $(function() {
 
   $('.compose').click(function(){
     $('.new-tweet').slideToggle(120, function() {
-      console.log(this);
       $(this).children('form').children('textarea').focus();
     });
   })
 
   loadTweets();
 
+  $('#newtweet').on('submit', function (event) {
+  event.preventDefault();
+  console.log('Submitted, performing ajax call...');
+  const serialized = $(this).serialize();
+  const thisElement = $(this);
+  if(serialized === 'text=') {
+    errorTab.text("You can't post an empty tweet!");
+    errorTab.slideToggle(100, function() {
+      setTimeout(function(){
+        errorTab.slideToggle("slow")
+      }, 3000);
+    });
+  } else if(serialized.length > 145){
+    errorTab.text("Oops, character limit exceeded!");
+    errorTab.slideToggle(100, function() {
+      setTimeout(function(){
+        errorTab.slideToggle("slow")
+      }, 3000);
+    });
+  } else {
+    $.ajax({
+      method: 'POST',
+      url: '/tweets',
+      data: serialized,
+    }).done(function () {
+      console.log(thisElement);
+      thisElement.children('textarea').val('');
+      thisElement.children('placeholder').val('What are you humming about?');
+      $('.counter').text('140');
+      loadTweets() 
+    });
+  }
+});
 
   
 

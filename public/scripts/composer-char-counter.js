@@ -1,9 +1,8 @@
 $((function() {
-  $('#newTweet').on('input', function (event) {
-    let remainingChars  = 140 - $('#newTweet').val().length;
+  $('#newtweet').children('textarea').on('input', function (event) {
+    let remainingChars  = 140 - $(this).val().length;
     remainingChars > -1 ? $(this).siblings("span").removeClass("invalid") : $(this).siblings("span").addClass("invalid");
-    console.log($(this).siblings("span"));
-    $(this).siblings("span")[0].innerText = remainingChars;
+    $(this).siblings("span").text(remainingChars);
   });
 }));
 
