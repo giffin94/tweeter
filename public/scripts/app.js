@@ -93,7 +93,7 @@ $(function() {
         id: tweetId,
         likes: likeTotal
       }
-    })
+    }).done(loadTweets())
   });
 
   //toggle compose tweet form

@@ -15,12 +15,9 @@ module.exports = function makeDataHelpers(db) {
       db.collection("tweets").find().toArray(callback);
     },
 
-    updateLikes: function(tweetId, likes) {
-      console.log(tweetId, likes);
+    updateLikes: function(tweetId, likes, callback) {
       let ID = ObjectId(tweetId);
-      db.collection("tweets").findOne({"_id": ID}, (err, res) => {
-        console.log(res);
-      });
+      db.collection("tweets").findOneAndUpdate({"_id": ID}, {$set: {"likes": `${likes}`}}, callback);
     }    
   };
 }

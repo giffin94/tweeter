@@ -45,7 +45,13 @@ module.exports = function(DataHelpers) {
   tweetsRoutes.put("/", function(req, res) {
     const tweetId = req.body.id;
     const likeCount = req.body.likes;
-    DataHelpers.updateLikes(tweetId, likeCount);
+    DataHelpers.updateLikes(tweetId, likeCount, (err) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        res.status(201).send();
+      }
+    });
   })
 
   return tweetsRoutes;
