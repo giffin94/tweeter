@@ -53,18 +53,19 @@ $(function() {
     //header with avatar, username, and tag
     $("<header>")
       .append($(`<img src=${tweetObject["user"]["avatars"]["small"]}>`))
-      .append($('<span/>', {'class': 'user', 'text': `${tweetObject["user"]["name"]}`}))
-      .append($('<span/>', {'class': 'tag', 'text': `${tweetObject["user"]["handle"]}`}))
+      .append($('<span>', {'class': 'user', 'text': `${tweetObject["user"]["name"]}`}))
+      .append($('<span>', {'class': 'tag', 'text': `${tweetObject["user"]["handle"]}`}))
       .appendTo(newTweet);
     //Tweet content
-    $('<p/>,', {'text': `${tweetObject["content"]["text"]}`})
+    $('<p>,', {'text': `${tweetObject["content"]["text"]}`})
       .appendTo(newTweet);
     //footer with icons
     $('<footer>')
-      .append($('<span/>', { 'data-livestamp': `${tweetObject["created_at"] / 1000}`}))
+      .append($('<span>', { 'data-livestamp': `${tweetObject["created_at"] / 1000}`}))
       .append($('<i>', {'class': "fa fa-flag"}))
       .append($('<i>', {"class": 'fa fa-retweet'}))
       .append($('<i>', {"class": 'fa fa-heart'}))
+      .append($('<span>', { "class": "likeCounter",'data-id': `${tweetObject["_id"]}`}).text(`0`))
       .appendTo(newTweet);
 
     return newTweet;
