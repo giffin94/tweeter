@@ -1,4 +1,6 @@
 "use strict";
+//Allows us to access the ObjectId prototype (for use when finding a tweet by ID)
+const ObjectId = require('mongodb').ObjectId; 
 
 // Defines helper functions for saving and getting tweets, using the database `db`
 module.exports = function makeDataHelpers(db) {
@@ -15,7 +17,10 @@ module.exports = function makeDataHelpers(db) {
 
     updateLikes: function(tweetId, likes) {
       console.log(tweetId, likes);
-      // db.collection("tweets").findOne({"_id": ObjectId(`${tweetId}`)}).toArray(console.log(this));
+      let ID = ObjectId(tweetId);
+      db.collection("tweets").findOne({"_id": ID}, (err, res) => {
+        console.log(res);
+      });
     }    
   };
 }
