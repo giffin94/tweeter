@@ -7,23 +7,23 @@
 
 $(function() {
 
-  const errorTab = $('.error');
-  const composeForm = $('.new-tweet')
-  const tweetsContainer = $('#tweets-container')
+  const errorTab = $(".error");
+  const composeForm = $(".new-tweet")
+  const tweetsContainer = $("#tweets-container")
   
   errorTab.slideUp(0);
   composeForm.slideUp(0);
 
   //clear form on tweet submission
   function resetForm (thisElement, callback) {
-    thisElement.children('textarea').val('');
-    thisElement.children('placeholder').val('What are you humming about?');
-    thisElement.children('span').text('140');
+    thisElement.children("textarea").val("");
+    thisElement.children("placeholder").val("What are you humming about?");
+    thisElement.children("span").text("140");
     callback();
   }
   //handles empty tweet or too many characters
   function checkSubmission (serialized, callback) {
-    if(!(serialized.replace('text=', ''))) {
+    if(!(serialized.replace("text=", ""))) {
       errorTab.text("You can't post an empty tweet!");
       errorTab.slideDown(100);
       return;
@@ -36,7 +36,7 @@ $(function() {
       return;
     }
   }
-  // accepts an array of tweet objects and send individual tweets to createTweetElement
+  // accepts an array of tweet objects and sends individual tweets to createTweetElement
   function renderTweets (tweetArray) {
     tweetsContainer.empty();
     for(const tweet of tweetArray) {
@@ -47,24 +47,25 @@ $(function() {
 
   //dynamically generate tweet from an object
   function createTweetElement (tweetObject) {
-    //article class: posttweet
+    //Tweet article class: posttweet
     let newTweet = $("<article>")
       .addClass("posttweet")
-    //header with avatar, username, and tag
+
+    //Tweet Header (Username, avatar, tag)
     $("<header>")
       .append($(`<img src=${tweetObject["user"]["avatars"]["small"]}>`))
-      .append($('<span/>', {'class': 'user', 'text': `${tweetObject["user"]["name"]}`}))
-      .append($('<span/>', {'class': 'tag', 'text': `${tweetObject["user"]["handle"]}`}))
+      .append($("<span/>", {"class": "user", "text": `${tweetObject["user"]["name"]}`}))
+      .append($("<span/>", {"class": "tag", "text": `${tweetObject["user"]["handle"]}`}))
       .appendTo(newTweet);
     //Tweet content
-    $('<p/>,', {'text': `${tweetObject["content"]["text"]}`})
+    $("<p/>,", {"text": `${tweetObject["content"]["text"]}`})
       .appendTo(newTweet);
-    //footer with icons
-    $('<footer>')
-      .append($('<span/>', { 'data-livestamp': `${tweetObject["created_at"] / 1000}`}))
-      .append($('<i>', {'class': "fa fa-flag"}))
-      .append($('<i>', {"class": 'fa fa-retweet'}))
-      .append($('<i>', {"class": 'fa fa-heart'}))
+    //Tweet footer (time created, icons)
+    $("<footer>")
+      .append($("<span/>", { "data-livestamp": `${tweetObject["created_at"] / 1000}`}))
+      .append($("<i>", {"class": "fa fa-flag"}))
+      .append($("<i>", {"class": "fa fa-retweet"}))
+      .append($("<i>", {"class": "fa fa-heart"}))
       .appendTo(newTweet);
 
     return newTweet;
@@ -73,8 +74,8 @@ $(function() {
   //loadtweets gets array of tweets from our mongodb and calls rendertweets
   function loadTweets () {
     $.ajax({
-      method: 'GET',
-      url: '/tweets'
+      method: "GET",
+      url: "/tweets"
     })
     .done(function(tweets) {
       tweetsContainer.replaceWith(renderTweets(tweets));
@@ -82,9 +83,9 @@ $(function() {
   };
 
   //toggle compose tweet form
-  $('.compose').click(function() {
+  $(".compose").click(function() {
     composeForm.slideToggle(120, function() {
-      $(this).children('form').children('textarea').focus();
+      $(this).children("form").children("textarea").focus();
     });
   });
 
@@ -92,9 +93,9 @@ $(function() {
   loadTweets();
 
   // handle submission of new tweet
-  $('#newtweet').on('submit', function(event) {
+  $("#newtweet").on("submit", function(event) {
     event.preventDefault();
-    console.log('Submitted, performing ajax call...');
+    console.log("Submitted, performing ajax call...");
     const serialized = $(this).serialize();
     const thisElement = $(this);
     errorTab.slideUp(100);
