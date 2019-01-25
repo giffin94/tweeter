@@ -208,14 +208,14 @@ main .new-tweet span {
   border-bottom-right-radius: 4px;
 }
 
-.likeCounter {
+.like-counter {
   opacity: 0;
   position: relative;
-  left: 224px;
+  left: 216px;
   bottom: -5px;
   font-size: xx-small;
 }
 
-.posttweet:hover .likeCounter {
+.posttweet:hover .like-counter {
   opacity: 0.5;
 }

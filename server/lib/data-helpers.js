@@ -11,6 +11,11 @@ module.exports = function makeDataHelpers(db) {
     // Get all tweets in `db`, sorted by newest first
     getTweets: function(callback) {
       db.collection("tweets").find().toArray(callback);
-    }
+    },
+
+    updateLikes: function(tweetId, likes) {
+      console.log(tweetId, likes);
+      // db.collection("tweets").findOne({"_id": ObjectId(`${tweetId}`)}).toArray(console.log(this));
+    }    
   };
 }

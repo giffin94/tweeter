@@ -6,12 +6,15 @@ const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
 const app           = express();
+const methodOverride = require('method-override')
 
 const {MongoClient} = require("mongodb");
 const MONGODB_URI = "mongodb://localhost:27017/tweeter";
 
+app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
 
 MongoClient.connect(MONGODB_URI, function(err, db) {
   if (err) throw err;

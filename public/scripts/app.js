@@ -65,7 +65,8 @@ $(function() {
       .append($('<i>', {'class': "fa fa-flag"}))
       .append($('<i>', {"class": 'fa fa-retweet'}))
       .append($('<i>', {"class": 'fa fa-heart'}))
-      .append($('<span>', { "class": "likeCounter",'data-id': `${tweetObject["_id"]}`}).text(`0`))
+      .append($('<span>', { "class": "like-counter",'data-id': `${tweetObject["_id"]}`}).text(`0`))
+      .append($('<button>', {"class": "likeBtn",'data-id': `${tweetObject["_id"]}`}).text(`${tweetObject["likes"]}`))
       .appendTo(newTweet);
 
     return newTweet;
@@ -81,6 +82,19 @@ $(function() {
       tweetsContainer.replaceWith(renderTweets(tweets));
     });
   };
+
+  tweetsContainer.on("click", ".likeBtn", function() {
+    let tweetId = (this.dataset.id);
+    let likeTotal = Number(this.innerText) + 1;
+    $.ajax({
+      method: 'POST',
+      url: '/tweets?_method=PUT',
+      data: {
+        id: tweetId,
+        likes: likeTotal
+      }
+    })
+  });
 
   //toggle compose tweet form
   $('.compose').click(function() {
@@ -110,7 +124,6 @@ $(function() {
       });
     });
   });
-
 });
 
   
