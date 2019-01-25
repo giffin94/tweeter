@@ -6,20 +6,23 @@
  */
 
 $(function() {
+
   const errorTab = $('.error');
   const composeForm = $('.new-tweet')
   const tweetsContainer = $('#tweets-container')
+  
   errorTab.slideUp(0);
   composeForm.slideUp(0);
 
-  function resetForm(thisElement, callback) {
+  //clear form on tweet submission
+  function resetForm (thisElement, callback) {
     thisElement.children('textarea').val('');
     thisElement.children('placeholder').val('What are you humming about?');
     thisElement.children('span').text('140');
     callback();
   }
-  
-  function checkSubmission(serialized, callback) {
+  //handles empty tweet or too many characters
+  function checkSubmission (serialized, callback) {
     if(!(serialized.replace('text=', ''))) {
       errorTab.text("You can't post an empty tweet!");
       errorTab.slideDown(100);
@@ -33,8 +36,8 @@ $(function() {
       return;
     }
   }
-
-  function renderTweets(tweetArray) {
+  // accepts an array of tweet objects and send individual tweets to createTweetElement
+  function renderTweets (tweetArray) {
     tweetsContainer.empty();
     for(const tweet of tweetArray) {
       tweetsContainer.prepend($(createTweetElement(tweet)));
@@ -42,20 +45,21 @@ $(function() {
     return tweetsContainer;
   }
 
-  function createTweetElement(tweetObject) {
-    //generate a new posttweet article 
+  //dynamically generate tweet from an object
+  function createTweetElement (tweetObject) {
+    //article class: posttweet
     let newTweet = $("<article>")
       .addClass("posttweet")
-    //generate and append header (with children) to article
+    //header with avatar, username, and tag
     $("<header>")
       .append($(`<img src=${tweetObject["user"]["avatars"]["small"]}>`))
       .append($('<span/>', {'class': 'user', 'text': `${tweetObject["user"]["name"]}`}))
       .append($('<span/>', {'class': 'tag', 'text': `${tweetObject["user"]["handle"]}`}))
       .appendTo(newTweet);
-    //generate and append tweet text
+    //Tweet content
     $('<p/>,', {'text': `${tweetObject["content"]["text"]}`})
       .appendTo(newTweet);
-    //generate and append footer (with Font awesome 4 icons)
+    //footer with icons
     $('<footer>')
       .append($('<span/>', { 'data-livestamp': `${tweetObject["created_at"] / 1000}`}))
       .append($('<i>', {'class': "fa fa-flag"}))
@@ -66,43 +70,45 @@ $(function() {
     return newTweet;
   }
 
-
-
-  function loadTweets() {
+  //loadtweets gets array of tweets from our mongodb and calls rendertweets
+  function loadTweets () {
     $.ajax({
       method: 'GET',
       url: '/tweets'
     })
-    .done(function (tweets) {
+    .done(function(tweets) {
       tweetsContainer.replaceWith(renderTweets(tweets));
-    })
-  }
-  
-  $('.compose').click(function(){
+    });
+  };
+
+  //toggle compose tweet form
+  $('.compose').click(function() {
     composeForm.slideToggle(120, function() {
       $(this).children('form').children('textarea').focus();
     });
-  })
+  });
 
+  // load tweets on page load
   loadTweets();
 
-  $('#newtweet').on('submit', function (event) {
+  // handle submission of new tweet
+  $('#newtweet').on('submit', function(event) {
     event.preventDefault();
     console.log('Submitted, performing ajax call...');
     const serialized = $(this).serialize();
     const thisElement = $(this);
     errorTab.slideUp(100);
 
-    checkSubmission(serialized, function () {
+    checkSubmission(serialized, function() {
       $.ajax({
         method: 'POST',
         url: '/tweets',
         data: serialized,
-      }).done(function () {
+      }).done(function() {
         resetForm(thisElement, loadTweets);
       });
-    })
-});
+    });
+  });
 
 });
 
