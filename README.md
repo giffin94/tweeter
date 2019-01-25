@@ -7,11 +7,11 @@ Tweeter is a simple, single-page Twitter clone.
 
 Here's how the app looks in the browser:
 
-!["The Registration Page:"]()
+!["Tweeter showing hovered state with New Tweet form toggled off."](https://github.com/giffin94/tweeter/blob/master/public/images/showingtweethover.png?raw=true)
 
-!["URL Index for my personal links, showing the number of times the site was visited through TinyApp:"]()
+!["Tweeter showing unhovered tweets with New Tweet form toggles off"](https://github.com/giffin94/tweeter/blob/master/public/images/tweeter-composehidden.png?raw=true)
 
-!["This page allows users to update existing links:"]()
+!["Tweeter showing new tweet form toggled on and characters exceeded Error message."](https://github.com/giffin94/tweeter/blob/master/public/images/Compose%20tweet%20error.png?raw=true)
 
 
 
