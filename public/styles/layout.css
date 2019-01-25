@@ -190,13 +190,16 @@ main .new-tweet span {
 
 .error {
   position: relative;
+  background: url(../images/Error.png) no-repeat;
+  background-size: 7% 49%;
+  background-position: 9px 8px;
   top: -4px;
   margin-bottom: 2px;
-  padding-left: 12px;
-  padding-top: 5px;
+  padding-left: 32px;
+  padding-top: 7px;
   background-color: #fbafa1;
   color: #ec0101;
-  width: 217px;
+  width: 235px;
   height: 35px;
   border: 1px solid red;
   border-top: lightsalmon;
