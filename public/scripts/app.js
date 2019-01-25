@@ -7,39 +7,62 @@
 
 $(function() {
   const errorTab = $('.error');
+  const composeForm = $('.new-tweet')
+  const tweetsContainer = $('#tweets-container')
   errorTab.slideUp(0);
+  composeForm.slideUp(0);
+
+  function resetForm(thisElement, callback) {
+    thisElement.children('textarea').val('');
+    thisElement.children('placeholder').val('What are you humming about?');
+    thisElement.children('span').text('140');
+    callback();
+  }
+  
+  function checkSubmission(serialized, callback) {
+    if(!(serialized.replace('text=', ''))) {
+      errorTab.text("You can't post an empty tweet!");
+      errorTab.slideDown(100);
+      return;
+    } else if(serialized.length > 145){
+      errorTab.text("Oops, character limit exceeded!");
+      errorTab.slideDown(100);
+      return;
+    } else {
+      callback();
+      return;
+    }
+  }
 
   function renderTweets(tweetArray) {
-    $('#tweets-container').empty();
+    tweetsContainer.empty();
     for(const tweet of tweetArray) {
-      $('#tweets-container').prepend($(createTweetElement(tweet)));
+      tweetsContainer.prepend($(createTweetElement(tweet)));
     }
-    return $('#tweets-container');
+    return tweetsContainer;
   }
 
   function createTweetElement(tweetObject) {
+    //generate a new posttweet article 
     let newTweet = $("<article>")
-      .addClass("posttweet").append(
-        $("<header>").append(
-          (`<img src=${tweetObject["user"]["avatars"]["small"]}>`)
-        ).append(
-            $('<span/>', {'class': 'user', 'text': `${tweetObject["user"]["name"]}`})
-        ).append(
-            $('<span/>', {'class': 'tag', 'text': `${tweetObject["user"]["handle"]}`})
-        )
-      ).append(
-        $('<p/>,', {'text': `${tweetObject["content"]["text"]}`})
-      ).append(
-        $('<footer>').append(
-          $('<span/>', { 'data-livestamp': `${tweetObject["created_at"] / 1000}`})
-          ).append(
-            $('<i>', {'class': "fa fa-flag"})
-          ).append(
-            $('<i>', {"class": 'fa fa-retweet'})
-          ).append(
-            $('<i>', {"class": 'fa fa-heart'})
-          )
-      );
+      .addClass("posttweet")
+    //generate and append header (with children) to article
+    $("<header>")
+      .append($(`<img src=${tweetObject["user"]["avatars"]["small"]}>`))
+      .append($('<span/>', {'class': 'user', 'text': `${tweetObject["user"]["name"]}`}))
+      .append($('<span/>', {'class': 'tag', 'text': `${tweetObject["user"]["handle"]}`}))
+      .appendTo(newTweet);
+    //generate and append tweet text
+    $('<p/>,', {'text': `${tweetObject["content"]["text"]}`})
+      .appendTo(newTweet);
+    //generate and append footer (with Font awesome 4 icons)
+    $('<footer>')
+      .append($('<span/>', { 'data-livestamp': `${tweetObject["created_at"] / 1000}`}))
+      .append($('<i>', {'class': "fa fa-flag"}))
+      .append($('<i>', {"class": 'fa fa-retweet'}))
+      .append($('<i>', {"class": 'fa fa-heart'}))
+      .appendTo(newTweet);
+
     return newTweet;
   }
 
@@ -51,12 +74,12 @@ $(function() {
       url: '/tweets'
     })
     .done(function (tweets) {
-      $('#tweets-container').replaceWith(renderTweets(tweets));
+      tweetsContainer.replaceWith(renderTweets(tweets));
     })
   }
-
+  
   $('.compose').click(function(){
-    $('.new-tweet').slideToggle(120, function() {
+    composeForm.slideToggle(120, function() {
       $(this).children('form').children('textarea').focus();
     });
   })
@@ -64,35 +87,22 @@ $(function() {
   loadTweets();
 
   $('#newtweet').on('submit', function (event) {
-  event.preventDefault();
-  console.log('Submitted, performing ajax call...');
-  const serialized = $(this).serialize();
-  const thisElement = $(this);
-  errorTab.slideUp(100);
-  if(!(serialized.replace('text=', ''))) {
-    errorTab.text("You can't post an empty tweet!");
-    errorTab.slideDown(100);
-    return;
-  } else if(serialized.length > 145){
-    errorTab.text("Oops, character limit exceeded!");
-    errorTab.slideDown(100);
-    return;
-  } else {
-    $.ajax({
-      method: 'POST',
-      url: '/tweets',
-      data: serialized,
-    }).done(function () {
-      console.log(thisElement);
-      thisElement.children('textarea').val('');
-      thisElement.children('placeholder').val('What are you humming about?');
-      $('.counter').text('140');
-      loadTweets()
-    });
-  }
-});
+    event.preventDefault();
+    console.log('Submitted, performing ajax call...');
+    const serialized = $(this).serialize();
+    const thisElement = $(this);
+    errorTab.slideUp(100);
 
-  
+    checkSubmission(serialized, function () {
+      $.ajax({
+        method: 'POST',
+        url: '/tweets',
+        data: serialized,
+      }).done(function () {
+        resetForm(thisElement, loadTweets);
+      });
+    })
+});
 
 });
 
