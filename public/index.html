@@ -37,21 +37,25 @@
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
       <button id="formtoggle" class="compose">Compose</button>
-      <button id="usertoggle" class="account">USER</button>
+      <button id="usertoggle" class="account">Your Tweeter</button>
     </nav>
 
   <!-- Page-specific (main) content here -->
   <main class="container">
       <section class="user-form">
-          <h3>Login Here</h3>
-          <form id="login" action="/tweets" method="post">
-              <label for="email">email:</label> <br>
-              <input id="email" type="email" name="email" style="width: 300px">
-              <br><br>
-              <label for="password">Password:</label> <br>
-              <input id="password" type="password" name="password" style="width: 300px">
+        <header class="register">
+          <h3>Register Here</h3>
+        </header>
+          <form class="register" action="/tweets" method="post">
+              <input id="email" type="email" name="email" placeholder="Enter you email to register." style="width: 300px">
+              <br></br>
+              <input id="password" type="password" name="password" placeholder="Make sure you pick a good password!" style="width: 300px">
+              <br></br>
+              <label for="tag">Your user handle: @</label>
+              <input id="tag" type="text" name="tag" placeholder="Buddy06" style="width: 200px">
               <input type="submit" value="Submit">
           </form>
+          <footer></footer>
         </section>
         <section class="new-tweet">
           <h2>Compose Tweet</h2>

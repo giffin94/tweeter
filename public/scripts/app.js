@@ -109,7 +109,7 @@ $(function() {
     });
   });
 
-  $("#login").on("submit", function(event) {
+  $(".register").on("submit", function(event) {
     event.preventDefault();
     const serialUser = $(this).serialize(); 
     //should check if info submitted is valid before we check the db
@@ -118,7 +118,11 @@ $(function() {
       method: "POST",
       url: '/users/reg',
       data: serialUser
-    }).done(null);
+    }).then(function() {
+      loginToggle.slideToggle(200, function() {
+        $(this).children("form").empty();
+      }); 
+    });
   });
 
   // handle submission of new tweet

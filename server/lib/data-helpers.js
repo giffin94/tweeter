@@ -18,7 +18,13 @@ module.exports = function makeDataHelpers(db) {
     updateLikes: function(tweetId, likes, callback) {
       let ID = ObjectId(tweetId);
       db.collection("tweets").findOneAndUpdate({"_id": ID}, {$set: {"likes": `${likes}`}}, callback);
-    }    
+    },
+    
+    registerUser: function(userObject, callback) {
+      db.collection("users").insertOne(userObject, callback);
+
+      
+    }
   };
 
 }

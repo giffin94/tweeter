@@ -227,3 +227,9 @@ main .new-tweet span {
 .posttweet:hover .likeBtn {
   opacity: 0.5;
 }
+.user-form .register {
+  padding: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+
+}

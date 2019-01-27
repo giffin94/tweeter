@@ -16,11 +16,17 @@ module.exports = function(DataHelpers) {
       _id: getRandomString(),
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
-      tag: req.body.tag,
+      tag: `@${req.body.tag}`,
       tweets: []
     }
-    console.log(newUser);
-    // DataHelpers.registerUser(newUser);
+  
+  DataHelpers.registerUser(newUser, (err, r) => {
+      if (err) {
+        throw(err);
+      } else {
+        res.send(r);
+      }
+    });
   });
 
   return userRoutes;
