@@ -17,7 +17,7 @@ module.exports = {
           tagOk = false;
         }
       });
-let userFlags = [tagOk, emailOk]
-return userFlags;
+    let userFlags = [tagOk, emailOk]
+    return userFlags;
   }
 } 

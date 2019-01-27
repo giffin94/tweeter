@@ -1,11 +1,14 @@
 
 $(function() {
 
+
   const errorTab = $(".error");
   const composeForm = $(".new-tweet");
   const tweetsContainer = $("#tweets-container");
   const loginToggle = $(".user-form");
   
+  console.log("ok");
+
   loginToggle.slideUp(0);
   errorTab.slideUp(0);
   composeForm.slideUp(0);
@@ -16,6 +19,20 @@ $(function() {
     thisElement.children("placeholder").val("What are you humming about?");
     thisElement.children("span").text("140");
     callback();
+  }
+  function checkEmailAndTag (userObject, allUsers) {
+    let tagOk = true;
+    let emailOk = true;
+    console.log(userObject);
+    allUsers.forEach((element) => {
+      if(element.email === userObject.email) {
+        emailOk = false;
+      } else if(element.tag === userObject.tag) {
+        tagOk = false;
+      }
+    });
+    let userFlags = [tagOk, emailOk]
+    return userFlags;
   }
   //handles empty tweet or too many characters
   function checkSubmission (serialized, callback) {
@@ -39,6 +56,28 @@ $(function() {
       tweetsContainer.prepend($(createTweetElement(tweet)));
     }
     return tweetsContainer;
+  }
+
+  function checkNewUser(userObject, callback) {
+    $.ajax({
+      method: "GET",
+      url: "/users/reg",
+    }).done(function (users) {
+      let checkFlags = [];
+      let allGood = false;
+      //userobject not readable as serialized data
+      checkFlags = checkEmailAndTag(userObject, users);
+      
+      if (checkFlags[1] === false) {
+        console.log("User already registered");
+        } else if(checkFlags[0] === false) {
+          console.log("tag taken");
+        } else {
+          callback;
+        }
+
+      return allGood;
+    })
   }
 
   //dynamically generate tweet from an object
@@ -111,16 +150,17 @@ $(function() {
 
   $(".register").on("submit", function(event) {
     event.preventDefault();
-    const serialUser = $(this).serialize(); 
+    const serialUser = $(this).serialize();
     //should check if info submitted is valid before we check the db
-    //making sure we get our data! (we'll send this through ajax to check user cred)
-    $.ajax({
-      method: "POST",
-      url: '/users/reg',
-      data: serialUser
-    }).then(function() {
-      loginToggle.slideToggle(200, function() {
-        $(this).children("form").empty();
+    checkNewUser(serialUser, function() {
+      $.ajax({
+        method: "POST",
+        url: '/users/reg',
+        data: serialUser
+      }).then(function() {
+        loginToggle.slideToggle(200, function() {
+          $(this).children("form").empty();
+        }); 
       }); 
     });
   });
@@ -143,6 +183,7 @@ $(function() {
       });
     });
   });
+
 });
 
   

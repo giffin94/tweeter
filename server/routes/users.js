@@ -10,7 +10,19 @@ function getRandomString() {
 
 // handles operations for the users collection in our mongo db
 module.exports = function(DataHelpers) {
-  
+
+  userRoutes.get("/reg", function(req, res) {
+    console.log("getting users...");
+    DataHelpers.getUsers((err, users) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        res.json(users);
+        console.log("sent users");
+      }
+    });
+  }),
+
   userRoutes.post("/reg", function(req, res) {
     const newUser = {
       _id: getRandomString(),
