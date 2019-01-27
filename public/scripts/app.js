@@ -22,12 +22,14 @@ $(function() {
     callback();
   }
   //handles empty tweet or too many characters
-  function checkSubmission (serialized, callback) {
-    if(!(serialized.replace("text=", ""))) {
+  function checkSubmission (element, callback) {
+    let submission = element.children("textarea").val().length
+    let spacesremoved = element.children("textarea").val().replace(/ /g , "");
+    if(submission <= 0 || spacesremoved <= 0) {
       errorTab.text("You can't post an empty tweet!");
       errorTab.slideDown(100);
       return;
-    } else if(serialized.length > 145){
+    } else if(submission > 140) {
       errorTab.text("Oops, character limit exceeded!");
       errorTab.slideDown(100);
       return;
@@ -100,7 +102,7 @@ $(function() {
     const thisElement = $(this);
     errorTab.slideUp(100);
 
-    checkSubmission(serialized, function() {
+    checkSubmission(thisElement, function() {
       $.ajax({
         method: 'POST',
         url: '/tweets',
